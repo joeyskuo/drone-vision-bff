@@ -1,3 +1,6 @@
+const FormData = require('form-data');
+const axios = require('axios');
+
 const detectController = {
   detectImage: async (req, res) => {
     try {
@@ -7,9 +10,22 @@ const detectController = {
 
       const imageFile = req.file;
 
-      res.set('Content-Type', 'image/png');
+      const formData = new FormData();
+      formData.append('file', imageFile.buffer, {
+        filename: imageFile.originalname,
+        contentType: imageFile.mimetype
+      });
 
-      res.send(imageFile.buffer);
+      const response = await axios.post('http://localhost:8000/detect', formData, {
+        headers: {
+          ...formData.getHeaders()
+        },
+        responseType: 'arraybuffer'
+      });
+
+      // Send the response image back
+      res.set('Content-Type', 'image/jpeg');
+      res.send(Buffer.from(response.data));
 
     } catch (error) {
       console.error('Error processing image:', error);
