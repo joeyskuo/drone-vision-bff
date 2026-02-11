@@ -16,8 +16,9 @@ const detectController = {
         contentType: imageFile.mimetype
       });
 
-      const response = await axios.post('http://localhost:8000/detect', formData, {
+      const response = await axios.post(process.env.DRONE_API_ENDPOINT, formData, {
         headers: {
+          'X-API-Key': process.env.X_API_KEY,
           ...formData.getHeaders()
         },
         responseType: 'arraybuffer'
