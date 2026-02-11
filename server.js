@@ -1,9 +1,13 @@
 require('dotenv').config();
+const cors = require('cors'); 
 const express = require('express');
 const detectRoutes = require('./src/routes/detect');
 
 const app = express();
 
+app.use(cors({
+  origin: [process.env.LOCALHOST, process.env.PROD_DOMAIN]
+}));
 app.use(express.json());
 
 app.use('/detect', detectRoutes);
