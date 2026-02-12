@@ -2,6 +2,7 @@ require('dotenv').config();
 const cors = require('cors'); 
 const express = require('express');
 const detectRoutes = require('./src/routes/detect');
+const warmupRoutes = require('./src/routes/warmup');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use('/warmup', warmupRoutes);
 app.use('/detect', detectRoutes);
 
 module.exports = app;
