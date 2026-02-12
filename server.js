@@ -7,7 +7,7 @@ const warmupRoutes = require('./src/routes/warmup');
 const app = express();
 
 app.use(cors({
-  origin: [process.env.LOCALHOST, process.env.PROD_DOMAIN]
+  origin: [process.env.LOCALHOST, process.env.PROD_DOMAIN, process.env.PROD_DOMAIN_WWW]
 }));
 app.use(express.json());
 
