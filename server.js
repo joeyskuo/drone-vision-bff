@@ -1,5 +1,7 @@
 require('dotenv').config();
-const cors = require('cors'); 
+require('./src/sentry/instrument');
+const Sentry = require("@sentry/node");
+const cors = require('cors');
 const express = require('express');
 const detectRoutes = require('./src/routes/detect');
 const warmupRoutes = require('./src/routes/warmup');
@@ -13,6 +15,8 @@ app.use(express.json());
 
 app.use('/warmup', warmupRoutes);
 app.use('/detect', detectRoutes);
+
+Sentry.setupExpressErrorHandler(app);
 
 module.exports = app;
 
